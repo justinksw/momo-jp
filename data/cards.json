@@ -1,7 +1,24 @@
 [
   {
+    "slug": "2026-11-05--daijoubu",
+    "title": "大丈夫",
+    "date": "2026-11-05",
+    "categories": [
+      "vocabulary",
+      "living"
+    ]
+  },
+  {
     "slug": "2026-11-05--nakereba-tara",
     "title": "なければ／たら",
+    "date": "2026-11-05",
+    "categories": [
+      "grammar"
+    ]
+  },
+  {
+    "slug": "2026-11-05--nakute-ii",
+    "title": "〜なくていい",
     "date": "2026-11-05",
     "categories": [
       "grammar"
@@ -14,6 +31,15 @@
     "categories": [
       "culture",
       "living"
+    ]
+  },
+  {
+    "slug": "2026-11-05--soubetsukai",
+    "title": "送別会",
+    "date": "2026-11-05",
+    "categories": [
+      "culture",
+      "society"
     ]
   },
   {
