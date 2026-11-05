@@ -73,10 +73,6 @@ function categoryChipsHtml(categories) {
     .join("");
 }
 
-function previewBannerHtml() {
-  return `<div class="preview-banner" role="status">PREVIEW</div>`;
-}
-
 function pageShell({ title, bodyClass, mainHtml }) {
   return `<!DOCTYPE html>
 <html lang="ja">
@@ -87,7 +83,6 @@ function pageShell({ title, bodyClass, mainHtml }) {
   <link rel="stylesheet" href="${BASE}/styles.css">
 </head>
 <body class="${bodyClass}">
-${previewBannerHtml()}
 ${mainHtml}
 </body>
 </html>`;
