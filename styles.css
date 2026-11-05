@@ -81,6 +81,10 @@ body {
   scrollbar-width: none;
 }
 
+#period-chips {
+  gap: 4px;
+}
+
 .chip-row::-webkit-scrollbar {
   display: none;
 }
@@ -109,6 +113,11 @@ body {
   outline-offset: 2px;
 }
 
+.chip--period {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
 .chip--period[aria-pressed="true"],
 .chip--cat[aria-pressed="true"] {
   background: #1a1a1a;
@@ -117,7 +126,7 @@ body {
 }
 
 .chip--cat[aria-pressed="false"].chip--dim {
-  opacity: 0.45;
+  color: #5c5c5c;
 }
 
 .chip-clear {
