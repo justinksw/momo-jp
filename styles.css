@@ -4,6 +4,15 @@
   box-sizing: border-box;
 }
 
+:root {
+  --color-page: #f5f0e6;
+  --color-raised: #fcfaf6;
+  --color-divider: #dad1bf;
+  --color-ink: #1c1a16;
+  --color-secondary: #524c42;
+  --color-example-rule: #c9ba9a;
+}
+
 html {
   -webkit-text-size-adjust: 100%;
 }
@@ -11,10 +20,11 @@ html {
 body {
   margin: 0;
   font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", system-ui, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  color: #1a1a1a;
-  background: #f7f4ef;
+  font-size: 18px;
+  line-height: 1.7;
+  font-weight: 400;
+  color: var(--color-ink);
+  background: var(--color-page);
   overflow-x: hidden;
 }
 
@@ -25,11 +35,11 @@ body {
   padding: 6px 12px;
   text-align: center;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.08em;
-  color: #1a1a1a;
-  background: #e8dcc8;
-  border-bottom: 1px solid #c9baa0;
+  color: var(--color-ink);
+  background: var(--color-divider);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .hub {
@@ -41,12 +51,12 @@ body {
 .site-header {
   margin-bottom: 20px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #ddd6cb;
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .site-header h1 {
   margin: 0;
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-weight: 600;
   letter-spacing: 0.02em;
 }
@@ -54,7 +64,7 @@ body {
 .site-header .sublabel {
   margin: 4px 0 0;
   font-size: 0.75rem;
-  color: #5c5c5c;
+  color: var(--color-secondary);
 }
 
 .filters {
@@ -65,10 +75,51 @@ body {
   margin-top: 16px;
 }
 
-.filter-label {
-  margin: 0 0 8px;
+.filter-section--category {
+  border-top: 1px solid var(--color-divider);
+  padding-top: 4px;
+}
+
+.category-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 8px 4px;
+  border: none;
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
   font-size: 0.8125rem;
-  color: #5c5c5c;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.category-toggle:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+.category-toggle__affordance {
+  flex-shrink: 0;
+  margin-left: 12px;
+  font-size: 1rem;
+  color: var(--color-secondary);
+}
+
+.category-selected {
+  margin-top: 4px;
+}
+
+.category-panel-open {
+  margin-top: 8px;
+  padding: 12px;
+  background: var(--color-raised);
+  border: 1px solid var(--color-divider);
+  border-radius: 8px;
 }
 
 .chip-row {
@@ -98,10 +149,10 @@ body {
   flex-shrink: 0;
   min-height: 44px;
   padding: 10px 14px;
-  border: 1px solid #c9c4bb;
+  border: 1px solid var(--color-divider);
   border-radius: 999px;
-  background: #fff;
-  color: #1a1a1a;
+  background: var(--color-raised);
+  color: var(--color-ink);
   font: inherit;
   font-size: 0.875rem;
   cursor: pointer;
@@ -109,7 +160,7 @@ body {
 }
 
 .chip:focus-visible {
-  outline: 2px solid #1a1a1a;
+  outline: 2px solid var(--color-ink);
   outline-offset: 2px;
 }
 
@@ -120,13 +171,14 @@ body {
 
 .chip--period[aria-pressed="true"],
 .chip--cat[aria-pressed="true"] {
-  background: #1a1a1a;
-  border-color: #1a1a1a;
-  color: #f7f4ef;
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-raised);
 }
 
 .chip--cat[aria-pressed="false"].chip--dim {
-  color: #5c5c5c;
+  color: var(--color-secondary);
+  border-color: var(--color-divider);
 }
 
 .chip-clear {
@@ -135,23 +187,21 @@ body {
   padding: 8px 12px;
   border: none;
   background: transparent;
-  color: #5c5c5c;
+  color: var(--color-secondary);
   font: inherit;
   font-size: 0.8125rem;
   text-decoration: underline;
   cursor: pointer;
 }
 
-.chip-clear:disabled {
-  opacity: 0.4;
-  cursor: default;
-  text-decoration: none;
+.chip-clear[hidden] {
+  display: none;
 }
 
 .count {
   margin: 12px 0 8px;
   font-size: 0.8125rem;
-  color: #5c5c5c;
+  color: var(--color-secondary);
 }
 
 .card-list {
@@ -161,19 +211,20 @@ body {
 }
 
 .card-row {
-  border-bottom: 1px solid #ddd6cb;
+  background: var(--color-raised);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .card-row a {
   display: block;
   min-height: 44px;
-  padding: 14px 4px;
+  padding: 14px 12px;
   text-decoration: none;
   color: inherit;
 }
 
 .card-row a:focus-visible {
-  outline: 2px solid #1a1a1a;
+  outline: 2px solid var(--color-ink);
   outline-offset: -2px;
 }
 
@@ -189,7 +240,7 @@ body {
   align-items: center;
   gap: 8px;
   font-size: 0.8125rem;
-  color: #5c5c5c;
+  color: var(--color-secondary);
 }
 
 .card-row__meta .chip--cat {
@@ -203,14 +254,14 @@ body {
 .empty {
   padding: 24px 0;
   text-align: center;
-  color: #5c5c5c;
+  color: var(--color-secondary);
   font-size: 0.9375rem;
 }
 
 .detail {
   max-width: 40rem;
   margin: 0 auto;
-  padding: 16px 16px 48px;
+  padding: 16px 20px 48px;
 }
 
 .back-link {
@@ -218,13 +269,13 @@ body {
   align-items: center;
   min-height: 44px;
   margin-bottom: 8px;
-  color: #1a1a1a;
+  color: var(--color-ink);
   font-size: 0.9375rem;
   text-decoration: none;
 }
 
 .back-link:focus-visible {
-  outline: 2px solid #1a1a1a;
+  outline: 2px solid var(--color-ink);
   outline-offset: 2px;
 }
 
@@ -242,7 +293,7 @@ body {
   gap: 8px;
   margin-bottom: 20px;
   font-size: 0.875rem;
-  color: #5c5c5c;
+  color: var(--color-secondary);
 }
 
 .detail__meta .chip--cat {
@@ -252,15 +303,16 @@ body {
 }
 
 .prose {
-  font-size: 17px;
-  line-height: 1.65;
-  color: #1a1a1a;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--color-ink);
 }
 
 .prose > p:first-child {
-  font-size: 1.05em;
+  font-size: 1.1em;
+  line-height: 1.7;
   padding-left: 12px;
-  border-left: 3px solid #c9baa0;
+  border-left: 3px solid var(--color-example-rule);
   margin-top: 0;
 }
 
@@ -269,5 +321,5 @@ body {
 }
 
 .prose strong {
-  font-weight: 700;
+  font-weight: 600;
 }

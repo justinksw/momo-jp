@@ -112,13 +112,16 @@ function formatListDate(dateStr, todayYear) {
 let allCards = [];
 let period = "day";
 const selectedCats = new Set();
+let categoryExpanded = false;
 
 async function init() {
   const res = await fetch(`${BASE}/data/cards.json`);
   allCards = await res.json();
   renderPeriodChips();
   renderCategoryChips();
+  bindCategoryToggle();
   bindClear();
+  syncCategoryPanel();
   update();
 }
 
@@ -143,6 +146,12 @@ function renderPeriodChips() {
   }
 }
 
+function toggleCategory(slug) {
+  if (selectedCats.has(slug)) selectedCats.delete(slug);
+  else selectedCats.add(slug);
+  update();
+}
+
 function renderCategoryChips() {
   const row = document.getElementById("category-chips");
   row.innerHTML = "";
@@ -153,40 +162,69 @@ function renderCategoryChips() {
     btn.textContent = CATEGORY_LABELS[slug];
     btn.dataset.cat = slug;
     btn.setAttribute("aria-pressed", "false");
-    btn.addEventListener("click", () => {
-      if (selectedCats.has(slug)) selectedCats.delete(slug);
-      else selectedCats.add(slug);
-      btn.setAttribute("aria-pressed", selectedCats.has(slug) ? "true" : "false");
-      update();
-    });
+    btn.addEventListener("click", () => toggleCategory(slug));
     row.appendChild(btn);
   }
+}
+
+function renderSelectedCollapsedChips() {
+  const row = document.getElementById("category-selected");
+  row.innerHTML = "";
+  for (const slug of CATEGORY_SLUGS) {
+    if (!selectedCats.has(slug)) continue;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "chip chip--cat";
+    btn.textContent = CATEGORY_LABELS[slug];
+    btn.dataset.cat = slug;
+    btn.setAttribute("aria-pressed", "true");
+    btn.addEventListener("click", () => toggleCategory(slug));
+    row.appendChild(btn);
+  }
+}
+
+function bindCategoryToggle() {
+  const toggle = document.getElementById("cat-toggle");
+  toggle.addEventListener("click", () => {
+    categoryExpanded = !categoryExpanded;
+    syncCategoryPanel();
+  });
+}
+
+function syncCategoryPanel() {
+  const toggle = document.getElementById("cat-toggle");
+  const openPanel = document.getElementById("category-panel-open");
+  const affordance = toggle.querySelector(".category-toggle__affordance");
+
+  toggle.setAttribute("aria-expanded", categoryExpanded ? "true" : "false");
+  openPanel.hidden = !categoryExpanded;
+  affordance.textContent = categoryExpanded ? "∨" : "›";
 }
 
 function bindClear() {
   const clear = document.getElementById("cat-clear");
   clear.addEventListener("click", () => {
     selectedCats.clear();
-    document.querySelectorAll(".chip--cat").forEach((el) => {
-      el.setAttribute("aria-pressed", "false");
-    });
     update();
   });
 }
 
-function update() {
-  const today = hkTodayParts();
-  const filtered = allCards.filter(
-    (c) => matchesPeriod(c, period, today) && matchesCategories(c, selectedCats)
-  );
+function syncClearVisibility() {
+  const clear = document.getElementById("cat-clear");
+  clear.hidden = selectedCats.size === 0;
+}
 
-  document.getElementById("count").textContent = `${filtered.length}件`;
+function syncCollapsedSelected() {
+  const row = document.getElementById("category-selected");
+  const show = !categoryExpanded && selectedCats.size > 0;
+  row.hidden = !show;
+  if (show) renderSelectedCollapsedChips();
+}
 
-  const clearBtn = document.getElementById("cat-clear");
-  clearBtn.disabled = selectedCats.size === 0;
-
-  document.querySelectorAll(".chip--cat").forEach((el) => {
+function updateCategoryChipStates(today) {
+  document.querySelectorAll("#category-chips .chip--cat").forEach((el) => {
     const slug = el.dataset.cat;
+    el.setAttribute("aria-pressed", selectedCats.has(slug) ? "true" : "false");
     if (selectedCats.has(slug)) {
       el.classList.remove("chip--dim");
       return;
@@ -198,6 +236,19 @@ function update() {
     ).length;
     el.classList.toggle("chip--dim", n === 0);
   });
+}
+
+function update() {
+  const today = hkTodayParts();
+  const filtered = allCards.filter(
+    (c) => matchesPeriod(c, period, today) && matchesCategories(c, selectedCats)
+  );
+
+  document.getElementById("count").textContent = `${filtered.length}件`;
+
+  syncClearVisibility();
+  syncCollapsedSelected();
+  updateCategoryChipStates(today);
 
   const list = document.getElementById("card-list");
   const empty = document.getElementById("empty");

@@ -18,10 +18,22 @@
       <div class="filter-section">
         <div id="period-chips" class="chip-row" role="group" aria-label="期間"></div>
       </div>
-      <div class="filter-section">
-        <p class="filter-label">カテゴリで絞る</p>
-        <div id="category-chips" class="chip-row chip-row--wrap" role="group"></div>
-        <button type="button" id="cat-clear" class="chip-clear" disabled>解除</button>
+      <div class="filter-section filter-section--category">
+        <button
+          type="button"
+          id="cat-toggle"
+          class="category-toggle"
+          aria-expanded="false"
+          aria-controls="category-panel-open"
+        >
+          <span class="category-toggle__label">カテゴリで絞る</span>
+          <span class="category-toggle__affordance" aria-hidden="true">›</span>
+        </button>
+        <div id="category-selected" class="category-selected chip-row chip-row--wrap" hidden></div>
+        <div id="category-panel-open" class="category-panel-open" hidden>
+          <div id="category-chips" class="chip-row chip-row--wrap" role="group" aria-label="カテゴリ"></div>
+        </div>
+        <button type="button" id="cat-clear" class="chip-clear" hidden>解除</button>
       </div>
       <p id="count" class="count">0件</p>
     </section>
