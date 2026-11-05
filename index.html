@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>勉強メモ</title>
+  <link rel="stylesheet" href="/momo-jp/styles.css">
+</head>
+<body class="page-hub">
+  <div class="preview-banner" role="status">PREVIEW</div>
+  <main class="hub">
+    <header class="site-header">
+      <h1>勉強メモ</h1>
+      <p class="sublabel">momo-jp</p>
+    </header>
+
+    <section class="filters" aria-label="絞り込み">
+      <div class="filter-section">
+        <div id="period-chips" class="chip-row" role="group" aria-label="期間"></div>
+      </div>
+      <div class="filter-section">
+        <p class="filter-label">カテゴリで絞る</p>
+        <div id="category-chips" class="chip-row chip-row--wrap" role="group"></div>
+        <button type="button" id="cat-clear" class="chip-clear" disabled>解除</button>
+      </div>
+      <p id="count" class="count">0件</p>
+    </section>
+
+    <p id="empty" class="empty" hidden>この条件のカードはないよ</p>
+    <ul id="card-list" class="card-list"></ul>
+  </main>
+  <script src="/momo-jp/hub.js" type="module"></script>
+</body>
+</html>
