@@ -51,7 +51,7 @@ function findCardFiles(dir, acc = []) {
   for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, ent.name);
     if (ent.isDirectory()) findCardFiles(p, acc);
-    else if (ent.name.endsWith(".md")) acc.push(p);
+    else if (ent.name.endsWith(".md") && ent.name !== "TEMPLATE.md") acc.push(p);
   }
   return acc;
 }
